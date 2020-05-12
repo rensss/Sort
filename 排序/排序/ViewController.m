@@ -40,8 +40,15 @@
     startTime = CFAbsoluteTimeGetCurrent();
     resaultArr = [self hillSort:data];
     linkTime = (CFAbsoluteTimeGetCurrent() - startTime);
-    NSLog(@"冒泡排序 Linked in %f ms", linkTime * 1000.0);
+    NSLog(@"希尔排序 Linked in %f ms", linkTime * 1000.0);
 //    NSLog(@"%@",resaultArr);
+    
+    startTime = CFAbsoluteTimeGetCurrent();
+    resaultArr = [self quicksort:data];
+    linkTime = (CFAbsoluteTimeGetCurrent() - startTime);
+    NSLog(@"快速排序 Linked in %f ms", linkTime * 1000.0);
+//    NSLog(@"%@",resaultArr);
+    
 }
 
 /**
@@ -137,17 +144,19 @@
  */
 - (NSArray *)quicksort:(NSArray *)dataSourceArr {
 	
-	CFAbsoluteTime startTime =CFAbsoluteTimeGetCurrent();
-	
 	NSMutableArray *currentArray = dataSourceArr.mutableCopy;
-	
-	
-	
-	CFAbsoluteTime linkTime = (CFAbsoluteTimeGetCurrent() - startTime);
-	
-	NSLog(@"快速排序 Linked in %f ms", linkTime *1000.0);
-	
-	return currentArray.copy;
+    NSInteger i,j,key;
+    for (i = 1; i < [currentArray count]; i++) {
+            key = [currentArray[i] integerValue];
+            j = i-1;
+            while ((j >= 0) && ([currentArray[j] integerValue] > key)) {
+                    currentArray[j+1] = currentArray[j];
+                    j--;
+            }
+            currentArray[j+1] = @(key);
+    }
+    
+    return currentArray.copy;
 }
 
 
